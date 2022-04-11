@@ -1,10 +1,10 @@
-package com.kms.byslboot;
+package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ByslbootApplicationTests {
+class ByslBootApplicationTests {
 
 	@Test
 	void contextLoads() {
