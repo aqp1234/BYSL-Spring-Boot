@@ -1,25 +1,41 @@
 package com.kms.byslboot.member.controller;
 
+import static com.kms.byslboot.common.ResponseEntityHttpStatus.*;
+
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kms.byslboot.member.dto.MemberDTO;
-import com.kms.byslboot.member.mapper.MemberMapper;
+import com.kms.byslboot.member.service.MemberService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
+@RequestMapping("/api/member")
 public class MemberController {
 	
-	@Autowired
-	private MemberMapper memberMapper;
+	private MemberService memberService;
 	
-	@GetMapping("/")
+	@GetMapping
 	public List<MemberDTO> test(){
-		List<MemberDTO> members = memberMapper.findAll(41);
-		System.out.println(members.get(0).getName());
-		System.out.println(members.get(0).getSchoolName());
+		List<MemberDTO> members = memberService.findAll();
 		return members;
+	}
+	
+	@PostMapping
+	public ResponseEntity<HttpStatus> insertMember(@RequestBody @Valid MemberDTO member){
+		memberService.insertMember(member);
+		
+		return RESPONSE_CREATED;
 	}
 }

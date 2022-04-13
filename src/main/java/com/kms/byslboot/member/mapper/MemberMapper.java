@@ -9,5 +9,6 @@ import com.kms.byslboot.member.dto.MemberDTO;
 
 @Mapper
 public interface MemberMapper {
-	List<MemberDTO> findAll(int memberId);
+	List<MemberDTO> findAll();
+	int insertMember(MemberDTO member);
 }
