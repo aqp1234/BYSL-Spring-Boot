@@ -2,6 +2,8 @@ package com.kms.byslboot.member.controller;
 
 import static com.kms.byslboot.common.ResponseEntityHttpStatus.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -33,17 +35,35 @@ public class MemberController {
 		return members;
 	}
 	
+	@PostMapping("/checkEmail")
+	public ResponseEntity<HttpStatus> checkDuplicatedByEmail(@RequestBody String email){
+		memberService.existsByEmail(email);
+		return RESPONSE_OK;
+	}
+
+	@PostMapping("/checkPhone")
+	public ResponseEntity<HttpStatus> checkDuplicatedByPhone(@RequestBody String phone){
+		memberService.existsByPhone(phone);
+		return RESPONSE_OK;
+	}
+	
 	@PostMapping
-	public ResponseEntity<HttpStatus> insertMember(@RequestBody @Valid MemberDTO member){
-		//이메일 중복이 있는지 확인해야됨
+	public ResponseEntity<MemberDTO> insertMember(@RequestBody @Valid MemberDTO member) throws URISyntaxException{
+		int memberId;
 		
-		memberService.insertMember(member);
+		// 이메일, 핸드폰 중복 가입을 확인하는 함수는 있지만 API로 호출하는 경우가 있을 수 있어 재확인
+		memberService.existsByEmail(member.getEmail());
+		memberService.existsByPhone(member.getPhone());
 		
-		return RESPONSE_CREATED;
+		memberId = memberService.insertMember(member);
+		
+		return ResponseEntity.created(new URI("/")).header("Content-Location", "/api/member/" + memberId).body(member);
 	}
 	
 	@GetMapping("/{memberId}")
 	public ResponseEntity<MemberDTO> findMemberById(@PathVariable int memberId){
 		return ResponseEntity.ok(memberService.findMemberById(memberId));
 	}
+	
+	
 }

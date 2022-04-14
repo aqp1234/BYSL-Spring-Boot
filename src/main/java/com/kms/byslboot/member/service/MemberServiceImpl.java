@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kms.byslboot.member.dto.MemberDTO;
+import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.mapper.MemberMapper;
 
@@ -74,10 +75,20 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public MemberDTO findMemberById(int memberId) {
-		Optional<MemberDTO> member = memberMapper.findMemberById(memberId);
-		System.out.println(member);
-		System.out.println(member.isEmpty());
-		System.out.println(member.orElseThrow(MemberNotFoundException::new));
-		return member.orElseThrow(MemberNotFoundException::new);
+		return memberMapper.findMemberById(memberId).orElseThrow(MemberNotFoundException::new);
+	}
+
+	@Override
+	public void existsByEmail(String email) {
+		if(memberMapper.existsByEmail(email) == true) {
+			throw new DuplicatedKeyException("이미 가입된 이메일입니다.");
+		}
+	}
+
+	@Override
+	public void existsByPhone(String phone) {
+		if(memberMapper.existsByPhone(phone) == true) {
+			throw new DuplicatedKeyException("이미 가입된 핸드폰 번호입니다.");
+		}
 	}
 }

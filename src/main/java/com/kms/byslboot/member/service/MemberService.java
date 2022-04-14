@@ -9,4 +9,6 @@ public interface MemberService {
 	public List<MemberDTO> findAll();
 	public int insertMember(MemberDTO member);
 	public MemberDTO findMemberById(int memberId);
+	public void existsByEmail(String email);
+	public void existsByPhone(String phone);
 }

@@ -16,4 +16,12 @@
 	<select id="findMemberById" parameterType="int" resultType="MemberDTO">
 		SELECT * FROM MEMBER WHERE id = #{id}
 	</select>
+	
+	<select id="existsByEmail" parameterType="String" resultType="boolean">
+		SELECT IF(COUNT(*) >= 1, 1, 0) FROM MEMBER WHERE email = #{email}
+	</select>
+	
+	<select id="existsByPhone" parameterType="String" resultType="boolean">
+		SELECT IF(COUNT(*) >= 1, 1, 0) FROM MEMBER WHERE phone = #{phone}
+	</select>
 </mapper>

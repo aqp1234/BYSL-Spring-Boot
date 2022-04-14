@@ -57,10 +57,10 @@ public class MemberControllerTest {
 	@Disabled
 	void insertMemberTest() throws Exception {
 		MemberDTO member = new MemberDTO();
-		member.setEmail("test2@naver.com");
+		member.setEmail("test9@naver.com");
 		member.setPassword("password");
 		member.setName("김민석");
-		member.setPhone("01011111112");
+		member.setPhone("01011111119");
 		member.setSchoolName("동북고등학교");
 		member.setLocationName("서울특별시");
 		
@@ -73,7 +73,54 @@ public class MemberControllerTest {
 	}
 	
 	@Test
+	@DisplayName("회원 가입 테스트(중복 이메일 가입 시도)")
+	@Disabled
+	void insertMemberTest2() throws Exception {
+		MemberDTO member = new MemberDTO();
+		member.setEmail("test9@naver.com");
+		member.setPassword("password");
+		member.setName("김민석");
+		member.setPhone("01011111119");
+		member.setSchoolName("동북고등학교");
+		member.setLocationName("서울특별시");
+		
+		String content = objectMapper.writeValueAsString(member);
+		mvc.perform(post(API_URL)
+				.content(content)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isConflict());
+	}
+	
+	@Test
+	@DisplayName("이메일 중복 테스트")
+	@Disabled
+	void checkDuplicatedByEmail() throws Exception{
+		String email = "test999@naver.com";
+		mvc.perform(post(API_URL + "/checkEmail")
+				.content(email)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+				
+	}
+
+	@Test
+	@DisplayName("핸드폰 번호 중복 테스트")
+	@Disabled
+	void checkDuplicatedByPhone() throws Exception{
+		String phone = "01011111120";
+		mvc.perform(post(API_URL + "/checkPhone")
+				.content(phone)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+				
+	}
+	
+	@Test
 	@DisplayName("맴버 ID 를 통해 멤버 검색")
+	@Disabled
 	void findMemberByIdTest() throws Exception {
 		mvc.perform(get(API_URL + "/5"))
 			.andExpect(status().isOk());
@@ -81,6 +128,7 @@ public class MemberControllerTest {
 
 	@Test
 	@DisplayName("맴버 ID 를 통해 멤버 검색(없는 ID)")
+	@Disabled
 	void findMemberByIdTest2() throws Exception {
 		mvc.perform(get(API_URL + "/1"))
 			.andExpect(status().isNotFound());
