@@ -54,6 +54,7 @@ public class MemberControllerTest {
 	
 	@Test
 	@DisplayName("회원 가입 테스트")
+	@Disabled
 	void insertMemberTest() throws Exception {
 		MemberDTO member = new MemberDTO();
 		member.setEmail("test2@naver.com");
@@ -69,5 +70,19 @@ public class MemberControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	@DisplayName("맴버 ID 를 통해 멤버 검색")
+	void findMemberByIdTest() throws Exception {
+		mvc.perform(get(API_URL + "/5"))
+			.andExpect(status().isOk());
+	}
+
+	@Test
+	@DisplayName("맴버 ID 를 통해 멤버 검색(없는 ID)")
+	void findMemberByIdTest2() throws Exception {
+		mvc.perform(get(API_URL + "/1"))
+			.andExpect(status().isNotFound());
 	}
 }

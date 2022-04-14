@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,8 +35,15 @@ public class MemberController {
 	
 	@PostMapping
 	public ResponseEntity<HttpStatus> insertMember(@RequestBody @Valid MemberDTO member){
+		//이메일 중복이 있는지 확인해야됨
+		
 		memberService.insertMember(member);
 		
 		return RESPONSE_CREATED;
+	}
+	
+	@GetMapping("/{memberId}")
+	public ResponseEntity<MemberDTO> findMemberById(@PathVariable int memberId){
+		return ResponseEntity.ok(memberService.findMemberById(memberId));
 	}
 }

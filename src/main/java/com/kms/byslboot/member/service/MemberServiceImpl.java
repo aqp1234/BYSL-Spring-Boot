@@ -2,6 +2,7 @@ package com.kms.byslboot.member.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kms.byslboot.member.dto.MemberDTO;
+import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.mapper.MemberMapper;
 
 @Service
@@ -68,5 +70,14 @@ public class MemberServiceImpl implements MemberService{
 		memberMapper.insertMember(member);
 		
 		return member.getId();
+	}
+
+	@Override
+	public MemberDTO findMemberById(int memberId) {
+		Optional<MemberDTO> member = memberMapper.findMemberById(memberId);
+		System.out.println(member);
+		System.out.println(member.isEmpty());
+		System.out.println(member.orElseThrow(MemberNotFoundException::new));
+		return member.orElseThrow(MemberNotFoundException::new);
 	}
 }

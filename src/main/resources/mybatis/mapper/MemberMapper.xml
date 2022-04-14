@@ -12,4 +12,8 @@
 		INSERT INTO MEMBER(email, name, password, phone, school_code, school_name, location_code, location_name)
 		VALUES (#{email}, #{name}, #{password}, #{phone}, #{schoolCode}, #{schoolName}, #{locationCode}, #{locationName})
 	</insert>
+	
+	<select id="findMemberById" parameterType="int" resultType="MemberDTO">
+		SELECT * FROM MEMBER WHERE id = #{id}
+	</select>
 </mapper>
