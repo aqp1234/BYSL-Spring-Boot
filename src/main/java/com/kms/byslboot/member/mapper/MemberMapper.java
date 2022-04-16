@@ -13,6 +13,7 @@ public interface MemberMapper {
 	List<MemberDTO> findAll();
 	int insertMember(MemberDTO member);
 	Optional<MemberDTO> findMemberById(int memberId);
+	Optional<MemberDTO> findMemberByEmail(String email);
 	boolean existsByEmail(String email);
 	boolean existsByPhone(String phone);
 }

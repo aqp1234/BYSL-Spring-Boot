@@ -1,10 +1,7 @@
 package com.kms.byslboot.member.service;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,25 +11,23 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kms.byslboot.member.dto.LoginDTO;
 import com.kms.byslboot.member.dto.MemberDTO;
 import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.mapper.MemberMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 
 	@Value("${api.NICE_KEY}")
 	private String NICE_KEY;
 	
-	private MemberMapper memberMapper;
-	private PasswordEncoder passwordEncoder;
-	
-	@Autowired
-	public MemberServiceImpl(MemberMapper memberMapper, PasswordEncoder passwordEncoder) {
-		this.memberMapper = memberMapper;
-		this.passwordEncoder = passwordEncoder;
-	}
+	private final MemberMapper memberMapper;
+	private final PasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<MemberDTO> findAll() {
@@ -79,6 +74,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public MemberDTO findMemberByEmail(String email) {
+		return memberMapper.findMemberByEmail(email).orElseThrow(MemberNotFoundException::new);
+	}
+
+	@Override
 	public void existsByEmail(String email) {
 		if(memberMapper.existsByEmail(email) == true) {
 			throw new DuplicatedKeyException("이미 가입된 이메일입니다.");
@@ -90,5 +90,15 @@ public class MemberServiceImpl implements MemberService{
 		if(memberMapper.existsByPhone(phone) == true) {
 			throw new DuplicatedKeyException("이미 가입된 핸드폰 번호입니다.");
 		}
+	}
+
+	@Override
+	public boolean checkPassword(LoginDTO login) {
+		MemberDTO member = memberMapper.findMemberByEmail(login.getEmail()).orElseThrow(MemberNotFoundException::new);
+		
+		if(passwordEncoder.matches(login.getPassword(), member.getPassword())) {
+			return true;
+		}
+		return false;
 	}
 }

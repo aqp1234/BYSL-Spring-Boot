@@ -17,17 +17,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kms.byslboot.common.annotation.LoginRequired;
+import com.kms.byslboot.member.dto.LoginDTO;
 import com.kms.byslboot.member.dto.MemberDTO;
+import com.kms.byslboot.member.service.LoginService;
 import com.kms.byslboot.member.service.MemberService;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api/member")
 public class MemberController {
 	
-	private MemberService memberService;
+	private final MemberService memberService;
+	private final LoginService loginService;
 	
 	@GetMapping
 	public List<MemberDTO> test(){
@@ -65,5 +70,20 @@ public class MemberController {
 		return ResponseEntity.ok(memberService.findMemberById(memberId));
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<HttpStatus> login(@RequestBody @Valid LoginDTO login){
+		boolean isValidLogin = memberService.checkPassword(login);
+		if(isValidLogin) {
+			loginService.login(memberService.findMemberByEmail(login.getEmail()).getId());
+			return RESPONSE_OK;
+		}
+		return RESPONSE_BAD_REQUEST;
+	}
 	
+	@LoginRequired
+	@GetMapping("/logout")
+	public ResponseEntity<HttpStatus> logout(){
+		loginService.logout();
+		return RESPONSE_OK;
+	}
 }
