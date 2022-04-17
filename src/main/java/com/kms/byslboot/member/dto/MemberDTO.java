@@ -6,15 +6,21 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.kms.byslboot.member.entity.Member;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberDTO {
-	private int id;
 	
 	@NotEmpty
 	@Size(max=100, message = "이메일은 최대 100글자만 가능합니다.")
@@ -31,14 +37,20 @@ public class MemberDTO {
 	
 	@NotEmpty(message = "핸드폰번호는 필수 값입니다.")
 	private String phone;
-	private String schoolCode;
 
 	@NotEmpty(message = "학교는 필수 값입니다.")
 	private String schoolName;
 	
-	private String locationCode;
 	private String locationName;
-	private Date createdAt;
-	private Date updatedAt;
-	private Date deletedAt;
+	
+	public static Member toEntity(MemberDTO memberDTO, PasswordEncoder passwordEncoder) {
+		return Member.builder()
+				.email(memberDTO.getEmail())
+				.name(memberDTO.getName())
+				.password(passwordEncoder.encode(memberDTO.getPassword()))
+				.phone(memberDTO.getPhone())
+				.schoolName(memberDTO.getSchoolName())
+				.locationName(memberDTO.getLocationName())
+				.build();
+	}
 }
