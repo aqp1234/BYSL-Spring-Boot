@@ -1,6 +1,7 @@
 package com.kms.byslboot.member.controller;
 
-import static com.kms.byslboot.common.ResponseEntityHttpStatus.*;
+import static com.kms.byslboot.common.ResponseEntityHttpStatus.RESPONSE_BAD_REQUEST;
+import static com.kms.byslboot.common.ResponseEntityHttpStatus.RESPONSE_OK;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kms.byslboot.common.annotation.LoginRequired;
 import com.kms.byslboot.member.dto.LoginDTO;
 import com.kms.byslboot.member.dto.MemberDTO;
+import com.kms.byslboot.member.entity.Member;
 import com.kms.byslboot.member.service.LoginService;
 import com.kms.byslboot.member.service.MemberService;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -35,8 +36,8 @@ public class MemberController {
 	private final LoginService loginService;
 	
 	@GetMapping
-	public List<MemberDTO> test(){
-		List<MemberDTO> members = memberService.findAll();
+	public List<Member> test(){
+		List<Member> members = memberService.findAll();
 		return members;
 	}
 	
@@ -53,20 +54,22 @@ public class MemberController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<MemberDTO> insertMember(@RequestBody @Valid MemberDTO member) throws URISyntaxException{
+	public ResponseEntity<Member> insertMember(@RequestBody @Valid MemberDTO memberDTO) throws URISyntaxException{
 		int memberId;
 		
 		// 이메일, 핸드폰 중복 가입을 확인하는 함수는 있지만 API로 호출하는 경우가 있을 수 있어 재확인
-		memberService.existsByEmail(member.getEmail());
-		memberService.existsByPhone(member.getPhone());
+		memberService.existsByEmail(memberDTO.getEmail());
+		memberService.existsByPhone(memberDTO.getPhone());
 		
-		memberId = memberService.insertMember(member);
+		memberId = memberService.insertMember(memberDTO);
+		
+		Member member = memberService.findMemberById(memberId);
 		
 		return ResponseEntity.created(new URI("/")).header("Content-Location", "/api/member/" + memberId).body(member);
 	}
 	
 	@GetMapping("/{memberId}")
-	public ResponseEntity<MemberDTO> findMemberById(@PathVariable int memberId){
+	public ResponseEntity<Member> findMemberById(@PathVariable int memberId){
 		return ResponseEntity.ok(memberService.findMemberById(memberId));
 	}
 	

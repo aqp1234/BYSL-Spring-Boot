@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.kms.byslboot.member.dto.MemberDTO;
+import com.kms.byslboot.member.entity.Member;
 
 @Mapper
 public interface MemberMapper {
-	List<MemberDTO> findAll();
-	int insertMember(MemberDTO member);
-	Optional<MemberDTO> findMemberById(int memberId);
-	Optional<MemberDTO> findMemberByEmail(String email);
+	List<Member> findAll();
+	int insertMember(Member member);
+	Optional<Member> findMemberById(int memberId);
+	Optional<Member> findMemberByEmail(String email);
 	boolean existsByEmail(String email);
 	boolean existsByPhone(String phone);
 }

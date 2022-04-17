@@ -4,20 +4,20 @@
 
 <mapper namespace="com.kms.byslboot.member.mapper.MemberMapper">
 
-	<select id="findAll" resultType="MemberDTO">
+	<select id="findAll" resultType="Member">
 		SELECT * FROM MEMBER
 	</select>
 	
-	<insert id="insertMember" parameterType="MemberDTO" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO MEMBER(email, name, password, phone, school_code, school_name, location_code, location_name)
 		VALUES (#{email}, #{name}, #{password}, #{phone}, #{schoolCode}, #{schoolName}, #{locationCode}, #{locationName})
 	</insert>
 	
-	<select id="findMemberById" parameterType="int" resultType="MemberDTO">
+	<select id="findMemberById" parameterType="int" resultType="Member">
 		SELECT * FROM MEMBER WHERE id = #{id}
 	</select>
 	
-	<select id="findMemberByEmail" parameterType="String" resultType="MemberDTO">
+	<select id="findMemberByEmail" parameterType="String" resultType="Member">
 		SELECT * FROM MEMBER WHERE email = #{email}
 	</select>
 	

@@ -8,6 +8,7 @@
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
 	<typeAliases>
-		<typeAlias type="com.kms.byslboot.member.dto.MemberDTO" alias="memberDTO" />
+		<typeAlias type="com.kms.byslboot.member.entity.Member" alias="Member" />
+		<typeAlias type="com.kms.byslboot.member.dto.MemberDTO" alias="MemberDTO" />
 	</typeAliases>
 </configuration>

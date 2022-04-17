@@ -1,6 +1,7 @@
 package com.kms.byslboot.member.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kms.byslboot.member.dto.LoginDTO;
 import com.kms.byslboot.member.dto.MemberDTO;
+import com.kms.byslboot.member.entity.Member;
 import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.mapper.MemberMapper;
@@ -30,8 +32,8 @@ public class MemberServiceImpl implements MemberService{
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override
-	public List<MemberDTO> findAll() {
-		List<MemberDTO> members;
+	public List<Member> findAll() {
+		List<Member> members;
 		
 		members = memberMapper.findAll();
 		
@@ -39,11 +41,13 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int insertMember(MemberDTO member) {
+	public int insertMember(MemberDTO memberDTO) {
 		RestTemplate restTemplate = new RestTemplate();
 		final String url= "https://open.neis.go.kr/hub/schoolInfo?KEY=" + NICE_KEY + 
-				"&Type=json&pindex=1&pSize=100&SCHUL_NM=" + member.getSchoolName() + 
-				"&LCTN_SC_NM=" + member.getLocationName();
+				"&Type=json&pindex=1&pSize=100&SCHUL_NM=" + memberDTO.getSchoolName() + 
+				"&LCTN_SC_NM=" + memberDTO.getLocationName();
+		
+		Member member = MemberDTO.toEntity(memberDTO, passwordEncoder);
 		
 		HttpEntity<String> response = restTemplate.getForEntity(url, String.class);
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -55,26 +59,24 @@ public class MemberServiceImpl implements MemberService{
 			String school_code = schoolInformation.get("SD_SCHUL_CODE").toString();
 			location_code = location_code.substring(1, location_code.length() - 1);
 			school_code = school_code.substring(1, school_code.length() - 1);
-			member.setLocationCode(location_code);
-			member.setSchoolCode(school_code);
+			member.setSchoolLocationCode(school_code, location_code);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 		
-		member.setPassword(passwordEncoder.encode(member.getPassword()));
+		int memberId = memberMapper.insertMember(member);
 		
-		memberMapper.insertMember(member);
-		
-		return member.getId();
+		return memberId;
 	}
 
 	@Override
-	public MemberDTO findMemberById(int memberId) {
+	public Member findMemberById(int memberId) {
+		Optional<Member> member = memberMapper.findMemberById(memberId);
 		return memberMapper.findMemberById(memberId).orElseThrow(MemberNotFoundException::new);
 	}
 
 	@Override
-	public MemberDTO findMemberByEmail(String email) {
+	public Member findMemberByEmail(String email) {
 		return memberMapper.findMemberByEmail(email).orElseThrow(MemberNotFoundException::new);
 	}
 
@@ -94,7 +96,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public boolean checkPassword(LoginDTO login) {
-		MemberDTO member = memberMapper.findMemberByEmail(login.getEmail()).orElseThrow(MemberNotFoundException::new);
+		Member member = memberMapper.findMemberByEmail(login.getEmail()).orElseThrow(MemberNotFoundException::new);
 		
 		if(passwordEncoder.matches(login.getPassword(), member.getPassword())) {
 			return true;

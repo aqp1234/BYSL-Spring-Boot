@@ -4,9 +4,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import com.kms.byslboot.member.dto.MemberDTO;
+import com.kms.byslboot.member.entity.Member;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -33,7 +32,7 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public MemberDTO getLoginMember() {
+	public Member getLoginMember() {
 		return memberService.findMemberById((int) session.getAttribute(MEMBER_ID));
 	}
 
