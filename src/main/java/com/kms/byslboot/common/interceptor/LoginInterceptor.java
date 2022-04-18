@@ -21,7 +21,8 @@ public class LoginInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		if(handler instanceof HandlerMethod && ((HandlerMethod) handler).hasMethodAnnotation(LoginRequired.class)) {
+		if(handler instanceof HandlerMethod && (((HandlerMethod) handler).hasMethodAnnotation(LoginRequired.class))
+				|| ((HandlerMethod) handler).getMethod().getDeclaringClass().getAnnotation(LoginRequired.class) != null) {
 			Integer memberId = loginService.getLoginMemberID();
 			if(memberId == null) {
 				throw new UnAuthenticatedException("로그인이 필요합니다.");
