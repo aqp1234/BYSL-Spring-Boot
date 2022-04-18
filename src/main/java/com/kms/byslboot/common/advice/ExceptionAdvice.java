@@ -2,6 +2,8 @@ package com.kms.byslboot.common.advice;
 
 import static com.kms.byslboot.common.ResponseEntityHttpStatus.*;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -33,18 +35,20 @@ public class ExceptionAdvice {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<String> notValidException(MethodArgumentNotValidException e){
-		String errors = "";
-		
-		for(FieldError error: e.getBindingResult().getFieldErrors()) {
-			errors += "[";
-			errors += error.getField();
-			errors += "](은)는 ";
-			errors += error.getDefaultMessage();
-			errors += " 입력된 값: [";
-			errors += error.getRejectedValue() == null ? "없음" : error.getRejectedValue();
-			errors += "]";
+		return new ResponseEntity<>(getErrorMessage(e.getBindingResult().getFieldErrors()), HttpStatus.BAD_REQUEST);
+	}
+	
+	private String getErrorMessage(List<FieldError> errors) {
+		String errorString = "";
+		for(FieldError error : errors) {
+			errorString += "[";
+			errorString += error.getField();
+			errorString += "](은)는 ";
+			errorString += error.getDefaultMessage();
+			errorString += " 입력된 값: [";
+			errorString += error.getRejectedValue() == null ? "없음" : error.getRejectedValue();
+			errorString += "]";
 		}
-		System.out.println("테스트");
-		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+		return errorString;
 	}
 }
