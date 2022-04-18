@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import javax.validation.constraints.AssertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,6 +52,8 @@ public class MemberServiceTest {
 	
 	private Member member;
 	
+	private LoginDTO login;
+	
 	@BeforeEach
 	void setup() {
 		ReflectionTestUtils.setField(memberService, "NICE_KEY", "77e0f523027c453ab55f63fd974b349b");
@@ -65,6 +69,11 @@ public class MemberServiceTest {
 		
 		member = memberDTO.toEntity(memberDTO, passwordEncoder);
 		member.setSchoolLocationCode("7010154", "B10");
+		
+		login = LoginDTO.builder()
+					.email("test@naver.com")
+					.password("password")
+					.build();
 	}
 	
 	@Test
@@ -126,6 +135,34 @@ public class MemberServiceTest {
 		
 		Assertions.assertThrows(DuplicatedKeyException.class, () -> {
 			memberService.existsByEmail(member.getEmail());
+		});
+	}
+	
+	@Test
+	@DisplayName("패스워드 동일한지 체크(동일 시)")
+	void checkPasswordTest() {
+		when(memberMapper.findMemberByEmail(any())).thenReturn(Optional.of(member));
+		when(passwordEncoder.matches(any(), any())).thenReturn(true);
+		
+		assertThat(memberService.checkPassword(login)).isEqualTo(true);
+	}
+	
+	@Test
+	@DisplayName("패스워드 동일한지 체크(틀릴 시)")
+	void checkPasswordTestFail() {
+		when(memberMapper.findMemberByEmail(any())).thenReturn(Optional.of(member));
+		when(passwordEncoder.matches(any(), any())).thenReturn(false);
+		
+		assertThat(memberService.checkPassword(login)).isEqualTo(false);
+	}
+	
+	@Test
+	@DisplayName("패스워드 동일한지 체크(없는 이메일)")
+	void checkPasswordTestNoEmail() {
+		when(memberMapper.findMemberByEmail(any())).thenReturn(Optional.empty());
+		
+		Assertions.assertThrows(MemberNotFoundException.class, () -> {
+			memberService.checkPassword(login);
 		});
 	}
 }
