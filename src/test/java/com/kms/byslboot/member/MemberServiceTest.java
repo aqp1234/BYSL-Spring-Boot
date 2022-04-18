@@ -1,21 +1,14 @@
 package com.kms.byslboot.member;
 
-import static org.assertj.core.api.Assertions.*;
-import org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import javax.validation.constraints.AssertTrue;
-
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +26,6 @@ import com.kms.byslboot.member.entity.Member;
 import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.mapper.MemberMapper;
-import com.kms.byslboot.member.service.MemberService;
 import com.kms.byslboot.member.service.MemberServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,7 +44,7 @@ public class MemberServiceTest {
 	
 	private Member member;
 	
-	private LoginDTO login;
+	private LoginDTO loginDTO;
 	
 	@BeforeEach
 	void setup() {
@@ -70,7 +62,7 @@ public class MemberServiceTest {
 		member = memberDTO.toEntity(memberDTO, passwordEncoder);
 		member.setSchoolLocationCode("7010154", "B10");
 		
-		login = LoginDTO.builder()
+		loginDTO = LoginDTO.builder()
 					.email("test@naver.com")
 					.password("password")
 					.build();
@@ -144,7 +136,7 @@ public class MemberServiceTest {
 		when(memberMapper.findMemberByEmail(any())).thenReturn(Optional.of(member));
 		when(passwordEncoder.matches(any(), any())).thenReturn(true);
 		
-		assertThat(memberService.checkPassword(login)).isEqualTo(true);
+		assertThat(memberService.checkPassword(loginDTO)).isEqualTo(true);
 	}
 	
 	@Test
@@ -153,7 +145,7 @@ public class MemberServiceTest {
 		when(memberMapper.findMemberByEmail(any())).thenReturn(Optional.of(member));
 		when(passwordEncoder.matches(any(), any())).thenReturn(false);
 		
-		assertThat(memberService.checkPassword(login)).isEqualTo(false);
+		assertThat(memberService.checkPassword(loginDTO)).isEqualTo(false);
 	}
 	
 	@Test
@@ -162,7 +154,7 @@ public class MemberServiceTest {
 		when(memberMapper.findMemberByEmail(any())).thenReturn(Optional.empty());
 		
 		Assertions.assertThrows(MemberNotFoundException.class, () -> {
-			memberService.checkPassword(login);
+			memberService.checkPassword(loginDTO);
 		});
 	}
 }
