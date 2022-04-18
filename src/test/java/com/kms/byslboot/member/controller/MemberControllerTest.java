@@ -237,7 +237,6 @@ public class MemberControllerTest {
 	
 	@Test
 	@DisplayName("로그인에 성공하면 200 상태코드를 반환한다.")
-	@Disabled
 	void login() throws Exception{
 		String content = objectMapper.writeValueAsString(loginDTO);
 		
