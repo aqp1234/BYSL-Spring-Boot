@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.exception.UnAuthenticatedException;
+import com.kms.byslboot.workspace.exception.WorkspaceNotFoundException;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
@@ -36,6 +37,11 @@ public class ExceptionAdvice {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<String> notValidException(MethodArgumentNotValidException e){
 		return new ResponseEntity<>(getErrorMessage(e.getBindingResult().getFieldErrors()), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(WorkspaceNotFoundException.class)
+	public ResponseEntity<HttpStatus> workspaceNotFoundException(){
+		return RESPONSE_NOT_FOUND;
 	}
 	
 	private String getErrorMessage(List<FieldError> errors) {

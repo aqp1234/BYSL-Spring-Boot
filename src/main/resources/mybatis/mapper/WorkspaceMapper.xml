@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kms.byslboot.workspace.mapper.WorkspaceMapper">
+
+	<insert id="insertWorkspace" parameterType="Workspace" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO WORKSPACE(workspace_name, owner_id) VALUES (#{workspaceName}, #{ownerId})
+	</insert>
+	
+	<select id="findWorkspaceById" parameterType="int">
+		SELECT * FROM WORKSPACE WHERE id = #{workspaceId}
+	</select>
+</mapper>
