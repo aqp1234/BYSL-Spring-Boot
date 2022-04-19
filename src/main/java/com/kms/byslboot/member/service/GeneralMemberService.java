@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+public class GeneralMemberService implements MemberService{
 
 	@Value("${api.NICE_KEY}")
 	private String NICE_KEY;

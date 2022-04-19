@@ -1,7 +1,7 @@
 package com.kms.byslboot.member;
 
 import static com.kms.byslboot.fixture.MemberFixture.MEMBER1;
-import static com.kms.byslboot.member.service.LoginServiceImpl.MEMBER_ID;
+import static com.kms.byslboot.member.service.SessionLoginServiceImpl.MEMBER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -18,16 +18,16 @@ import org.springframework.mock.web.MockHttpSession;
 import com.kms.byslboot.member.dto.LoginDTO;
 import com.kms.byslboot.member.dto.MemberDTO;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
-import com.kms.byslboot.member.service.LoginServiceImpl;
-import com.kms.byslboot.member.service.MemberServiceImpl;
+import com.kms.byslboot.member.service.SessionLoginServiceImpl;
+import com.kms.byslboot.member.service.GeneralMemberService;
 
 @ExtendWith(MockitoExtension.class)
-public class LoginServiceTest {
+public class SessionLoginServiceTest {
 	
-	private LoginServiceImpl loginService;
+	private SessionLoginServiceImpl loginService;
 
 	@Mock
-	private MemberServiceImpl memberService;
+	private GeneralMemberService memberService;
 	
 	private MockHttpSession mockHttpSession;
 	
@@ -52,7 +52,7 @@ public class LoginServiceTest {
 					.build();
 		
 		mockHttpSession = new MockHttpSession();
-		loginService = new LoginServiceImpl(mockHttpSession, memberService);
+		loginService = new SessionLoginServiceImpl(mockHttpSession, memberService);
 	}
 	
 	@Test

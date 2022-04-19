@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class LoginServiceImpl implements LoginService{
+public class SessionLoginServiceImpl implements LoginService{
 
 	private final HttpSession session;
 	private final MemberService memberService;
