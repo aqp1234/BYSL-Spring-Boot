@@ -9,6 +9,10 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.kms.byslboot.member.entity.Member" alias="Member" />
-		<typeAlias type="com.kms.byslboot.member.dto.MemberDTO" alias="MemberDTO" />
+		<typeAlias type="com.kms.byslboot.workspace.entity.Team" alias="Team" />
+		<typeAlias type="com.kms.byslboot.workspace.entity.Permission" alias="Permission" />
+		<typeAlias type="com.kms.byslboot.workspace.entity.TeamPermission" alias="TeamPermission" />
+		<typeAlias type="com.kms.byslboot.workspace.entity.UserWorkspace" alias="UserWorkspace" />
+		<typeAlias type="com.kms.byslboot.workspace.entity.Workspace" alias="Workspace" />
 	</typeAliases>
 </configuration>

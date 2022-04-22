@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kms.byslboot.workspace.mapper.TeamMapper">
+
+	<insert id="insertTeam" parameterType="Team" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO TEAM(workspace_id, name) VALUES (#{workspaceId}, #{name})
+	</insert>
+	
+	<insert id="insertAdminTeam" parameterType="Team" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO TEAM(workspace_id, name, is_admin) VALUES (#{workspaceId}, #{name}, true)
+	</insert>
+	
+	<insert id="insertGuestTeam" parameterType="Team" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO TEAM(workspace_id, name, is_guest) VALUES (#{workspaceId}, #{name}, true)
+	</insert>
+	
+	<select id="findTeamById" parameterType="int" resultType="Team">
+		SELECT * FROM TEAM WHERE id = #{teamId}
+	</select>
+	
+	<select id="findAdminTeamByWorkspaceId" parameterType="int" resultType="Team">
+		SELECT * FROM TEAM WHERE workspace_id = #{workspaceId} AND is_admin = true
+	</select>
+	
+	<select id="findGuestTeamByWorkspaceId" parameterType="int" resultType="Team">
+		SELECT * FROM TEAM WHERE workspace_id = #{workspaceId} AND is_guest = true
+	</select>
+	
+	<select id="findAllTeamByWorkspaceId" parameterType="int" resultType="Team">
+		SELECT * FROM TEAM WHERE workspace_id = #{workspaceId}
+	</select>
+	
+	<delete id="deleteTeamById" parameterType="int">
+		DELETE FROM TEAM WHERE id = #{teamId}
+	</delete>
+</mapper>
