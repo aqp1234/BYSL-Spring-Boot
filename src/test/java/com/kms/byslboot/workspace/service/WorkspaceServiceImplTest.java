@@ -1,4 +1,4 @@
-package com.kms.byslboot.workspace;
+package com.kms.byslboot.workspace.service;
 
 import static com.kms.byslboot.member.service.SessionLoginServiceImpl.MEMBER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +24,7 @@ import com.kms.byslboot.workspace.mapper.WorkspaceMapper;
 import com.kms.byslboot.workspace.service.WorkspaceServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-public class WorkspaceServiceTest {
+public class WorkspaceServiceImplTest {
 	
 	private WorkspaceServiceImpl workspaceService;
 	
