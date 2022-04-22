@@ -9,12 +9,12 @@ import com.kms.byslboot.workspace.entity.Team;
 
 @Mapper
 public interface TeamMapper {
-	int insertTeam(Team team);
-	int insertAdminTeam(Team team);
-	int insertGuestTeam(Team team);
-	Optional<Team> findTeamById(int teamId);
-	Optional<Team> findAdminTeamByWorkspaceId(int workspaceId);
-	Optional<Team> findGuestTeamByWorkspaceId(int workspaceId);
-	List<Team> findAllTeamByWorkspaceId(int workspaceId);
-	void deleteTeamById(int teamId);
+	public void insertTeam(Team team);
+	public void insertAdminTeam(Team team);
+	public void insertGuestTeam(Team team);
+	public Optional<Team> findTeamById(int teamId);
+	public Optional<Team> findAdminTeamByWorkspaceId(int workspaceId);
+	public Optional<Team> findGuestTeamByWorkspaceId(int workspaceId);
+	public List<Team> findAllTeamByWorkspaceId(int workspaceId);
+	public void deleteTeamById(int teamId);
 }

@@ -21,22 +21,22 @@ public class TeamServiceImpl implements TeamService{
 	@Override
 	public int teamInsert(TeamDTO teamDTO, int workspaceId) {
 		Team team = teamDTO.toEntity(teamDTO, workspaceId);
-		int teamId = teamMapper.insertTeam(team);
-		return teamId;
+		teamMapper.insertTeam(team);
+		return team.getId();
 	}
 
 	@Override
 	public int adminTeamInsert(TeamDTO teamDTO, int workspaceId) {
 		Team team = teamDTO.toAdminEntity(teamDTO, workspaceId);
-		int teamId = teamMapper.insertAdminTeam(team);
-		return teamId;
+		teamMapper.insertAdminTeam(team);
+		return team.getId();
 	}
 
 	@Override
 	public int guestTeamInsert(TeamDTO teamDTO, int workspaceId) {
 		Team team = teamDTO.toGuestEntity(teamDTO, workspaceId);
-		int teamId = teamMapper.insertGuestTeam(team);
-		return teamId;
+		teamMapper.insertGuestTeam(team);
+		return team.getId();
 	}
 
 	@Override
