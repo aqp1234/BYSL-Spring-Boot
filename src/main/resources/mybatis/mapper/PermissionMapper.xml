@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kms.byslboot.workspace.mapper.PermissionMapper">
+
+	<select id="findAllPermissions" resultType="Permission">
+		SELECT * FROM PERMISSION;
+	</select>
+	
+	<select id="findPermissionById" parameterType="int" resultType="Permission">
+		SELECT * FROM PERMISSION WHERE id = #{permissionId}
+	</select>
+</mapper>

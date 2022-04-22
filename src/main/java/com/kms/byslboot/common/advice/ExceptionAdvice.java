@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.exception.UnAuthenticatedException;
+import com.kms.byslboot.workspace.exception.PermissionNotFoundException;
 import com.kms.byslboot.workspace.exception.WorkspaceNotFoundException;
 
 @RestControllerAdvice
@@ -32,6 +33,11 @@ public class ExceptionAdvice {
 	@ExceptionHandler(UnAuthenticatedException.class)
 	public ResponseEntity<HttpStatus> unAuthenticatedException(){
 		return RESPONSE_UNAUTHORIZED;
+	}
+	
+	@ExceptionHandler(PermissionNotFoundException.class)
+	public ResponseEntity<HttpStatus> badRequestException(){
+		return RESPONSE_BAD_REQUEST;
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
