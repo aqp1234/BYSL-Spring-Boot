@@ -3,6 +3,7 @@ package com.kms.byslboot.workspace.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -43,8 +44,6 @@ public class PermissionMapperTest {
 	@Test
 	@DisplayName("없는 아이디를 조회할 시 PermissionNotFoundException 을 처리한다.")
 	void findPermissionByIdFail() {
-		Assertions.assertThrows(PermissionNotFoundException.class, () -> {
-			permissionMapper.findPermissionById(26);
-		});
+		assertThat(permissionMapper.findPermissionById(27)).isEqualTo(Optional.empty());
 	}
 }
