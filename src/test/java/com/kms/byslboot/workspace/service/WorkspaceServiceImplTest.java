@@ -3,6 +3,7 @@ package com.kms.byslboot.workspace.service;
 import static com.kms.byslboot.member.service.SessionLoginServiceImpl.MEMBER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
@@ -21,7 +22,6 @@ import com.kms.byslboot.workspace.dto.WorkspaceDTO;
 import com.kms.byslboot.workspace.entity.Workspace;
 import com.kms.byslboot.workspace.exception.WorkspaceNotFoundException;
 import com.kms.byslboot.workspace.mapper.WorkspaceMapper;
-import com.kms.byslboot.workspace.service.WorkspaceServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class WorkspaceServiceImplTest {
@@ -42,22 +42,16 @@ public class WorkspaceServiceImplTest {
 		workspaceDTO = WorkspaceDTO.builder()
 						.workspaceName("테스트")
 						.build();
-		workspace = Workspace.builder()
-						.id(0)
-						.workspaceName(workspaceDTO.getWorkspaceName())
-						.ownerId(0)
-						.createdAt(new Timestamp(System.currentTimeMillis()))
-						.build();
+		workspace = workspaceDTO.toEntity(workspaceDTO, session);
 		workspaceService = new WorkspaceServiceImpl(session, workspaceMapper);
 	}
 	
 	@Test
 	@DisplayName("워크스페이스 추가에 성공하면 생성된 워크스페이스의 아이디를 반환한다.")
 	void insertWorkspace() {
-		when(workspaceMapper.insertWorkspace(any(Workspace.class))).thenReturn(0);
+		doNothing().when(workspaceMapper).insertWorkspace(any(Workspace.class));
 		
-		int workspaceId = workspaceService.insertWorkspace(workspaceDTO);
-		assertThat(workspaceId).isEqualTo(0);
+		workspaceService.insertWorkspace(workspaceDTO);
 	}
 	
 	@Test

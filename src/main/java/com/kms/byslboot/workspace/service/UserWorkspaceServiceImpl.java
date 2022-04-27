@@ -1,0 +1,52 @@
+package com.kms.byslboot.workspace.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Service;
+
+import com.kms.byslboot.workspace.dto.UserWorkspaceDTO;
+import com.kms.byslboot.workspace.entity.UserWorkspace;
+import com.kms.byslboot.workspace.exception.UserWorkspaceNotFoundException;
+import com.kms.byslboot.workspace.mapper.UserWorkspaceMapper;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class UserWorkspaceServiceImpl implements UserWorkspaceService{
+	
+	private final UserWorkspaceMapper userWorkspaceMapper;
+	private final HttpSession session;
+
+	@Override
+	public void insertUserWorkspace(UserWorkspaceDTO userWorkspaceDTO, int workspaceId, int teamId) {
+		UserWorkspace userWorkspace = userWorkspaceDTO.toEntity(userWorkspaceDTO, session, workspaceId, teamId);
+		userWorkspaceMapper.insertUserWorkspace(userWorkspace);
+	}
+
+	@Override
+	public UserWorkspace findUserWorkspaceById(int userWorkspaceId) {
+		UserWorkspace userWorkspace = userWorkspaceMapper.findUserWorkspaceById(userWorkspaceId).orElseThrow(UserWorkspaceNotFoundException::new);
+		return userWorkspace;
+	}
+
+	@Override
+	public List<UserWorkspace> findUserWorkspaceByWorkspaceId(int workspaceId) {
+		return userWorkspaceMapper.findUSerWorkspaceByWorkspaceId(workspaceId);
+	}
+
+	@Override
+	public void updateUserWorkspace(UserWorkspaceDTO userWorkspaceDTO, int userWorkspaceId) {
+		UserWorkspace userWorkspace = userWorkspaceDTO.toUpdateEntity(userWorkspaceDTO, userWorkspaceId);
+		userWorkspaceMapper.updateUserWorkspace(userWorkspace);
+	}
+
+	@Override
+	public void deleteUserWorkspaceById(int userWorkspaceId) {
+		userWorkspaceMapper.deleteUserWorkspaceById(userWorkspaceId);
+	}
+
+}

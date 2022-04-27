@@ -21,13 +21,24 @@ public class WorkspaceServiceImpl implements WorkspaceService{
 	@Override
 	public int insertWorkspace(WorkspaceDTO workspaceDTO) {
 		Workspace workspace = workspaceDTO.toEntity(workspaceDTO, session);
-		int workspaceId = workspaceMapper.insertWorkspace(workspace);
-		return workspaceId;
+		workspaceMapper.insertWorkspace(workspace);
+		return workspace.getId();
 	}
 
 	@Override
 	public Workspace findWorkspaceById(int workspaceId) {
 		return workspaceMapper.findWorkspaceById(workspaceId).orElseThrow(WorkspaceNotFoundException::new);
+	}
+
+	@Override
+	public void updateWorkspace(WorkspaceDTO workspaceDTO) {
+		Workspace workspace = workspaceDTO.toEntity(workspaceDTO, session);
+		workspaceMapper.updateWorkspace(workspace);
+	}
+
+	@Override
+	public void deleteWorkspaceById(int workspaceId) {
+		workspaceMapper.deleteWorkspaceById(workspaceId);
 	}
 
 }

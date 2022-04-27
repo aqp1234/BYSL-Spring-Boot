@@ -8,6 +8,8 @@ import com.kms.byslboot.workspace.entity.Workspace;
 
 @Mapper
 public interface WorkspaceMapper {
-	int insertWorkspace(Workspace workspace);
-	Optional<Workspace> findWorkspaceById(int workspaceId);
+	public void insertWorkspace(Workspace workspace);
+	public Optional<Workspace> findWorkspaceById(int workspaceId);
+	public void updateWorkspace(Workspace workspace);
+	public void deleteWorkspaceById(int workspaceId);
 }

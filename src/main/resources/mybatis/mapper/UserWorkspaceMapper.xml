@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kms.byslboot.workspace.mapper.UserWorkspaceMapper">
+
+	<insert id="insertUserWorkspace" parameterType="UserWorkspace" useGeneratedKeys="true" keyColumn="id">
+		INSERT INTO USER_WORKSPACE(user_id, workspace_id, team_id, nick, color) 
+		VALUES (#{userId}, #{workspaceId}, #{teamId}, #{nick}, #{color})
+	</insert>
+	
+	<select id="findUserWorkspaceById" parameterType="int" resultType="UserWorkspace">
+		SELECT * FROM USER_WORKSPACE WHERE id = #{userWorkspaceId}
+	</select>
+	
+	<select id="findUserWorkspaceByWorkspaceId" parameterType="int" resultType="UserWorkspace">
+		SELECT * FROM USER_WORKSPACE WHERE workspace_id = #{workspaceId}
+	</select>
+	
+	<update id="updateUserWorkspace" parameterType="UserWorkspace">
+		UPDATE USER_WORKSPACE SET nick = #{nick}, color = #{color} WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteUserWorkspaceId" parameterType="int">
+		DELETE FROM USER_WORKSPACE WHERE id = #{id}
+	</delete>
+</mapper>

@@ -1,6 +1,9 @@
 package com.kms.byslboot.common.advice;
 
-import static com.kms.byslboot.common.ResponseEntityHttpStatus.*;
+import static com.kms.byslboot.common.ResponseEntityHttpStatus.RESPONSE_BAD_REQUEST;
+import static com.kms.byslboot.common.ResponseEntityHttpStatus.RESPONSE_CONFLICT;
+import static com.kms.byslboot.common.ResponseEntityHttpStatus.RESPONSE_NOT_FOUND;
+import static com.kms.byslboot.common.ResponseEntityHttpStatus.RESPONSE_UNAUTHORIZED;
 
 import java.util.List;
 
@@ -15,12 +18,14 @@ import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.exception.UnAuthenticatedException;
 import com.kms.byslboot.workspace.exception.PermissionNotFoundException;
+import com.kms.byslboot.workspace.exception.UserWorkspaceNotFoundException;
 import com.kms.byslboot.workspace.exception.WorkspaceNotFoundException;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-	@ExceptionHandler({MemberNotFoundException.class, MethodArgumentNotValidException.class, WorkspaceNotFoundException.class})
+	@ExceptionHandler({MemberNotFoundException.class, MethodArgumentNotValidException.class, WorkspaceNotFoundException.class, 
+		UserWorkspaceNotFoundException.class})
 	public ResponseEntity<HttpStatus> notFoundException(){
 		return RESPONSE_NOT_FOUND;
 	}

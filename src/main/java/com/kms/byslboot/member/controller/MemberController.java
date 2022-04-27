@@ -70,7 +70,7 @@ public class MemberController {
 	
 	@GetMapping("/{memberId}")
 	public ResponseEntity<Member> findMemberById(@PathVariable int memberId){
-		return ResponseEntity.ok(memberService.findMemberById(memberId));
+		return ResponseEntity.status(200).body(memberService.findMemberById(memberId));
 	}
 	
 	@PostMapping("/login")

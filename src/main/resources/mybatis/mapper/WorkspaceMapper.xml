@@ -11,4 +11,12 @@
 	<select id="findWorkspaceById" parameterType="int" resultType="Workspace">
 		SELECT * FROM WORKSPACE WHERE id = #{workspaceId}
 	</select>
+	
+	<update id="updateWorkspace" parameterType="Workspace">
+		UPDATE WORKSPACE SET workspace_name = #{workspaceName} WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteWorkspaceById" parameterType="int">
+		DELETE FROM WORKSPACE WHERE id = #{id}
+	</delete>
 </mapper>
