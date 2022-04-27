@@ -2,6 +2,8 @@ package com.kms.byslboot.workspace.controller;
 
 import static com.kms.byslboot.common.ResponseEntityHttpStatus.RESPONSE_OK;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +46,8 @@ public class WorkspaceController {
 	private final UserWorkspaceService userWorkspaceService;
 	
 	@PostMapping
-	public ResponseEntity<HttpStatus> insertWorkspace(@RequestBody @Valid WorkspaceDTO workspaceDTO, 
-			@RequestBody @Valid UserWorkspaceDTO userWorkspaceDTO){
+	public ResponseEntity<Workspace> insertWorkspace(@RequestBody @Valid WorkspaceDTO workspaceDTO, 
+			@RequestBody @Valid UserWorkspaceDTO userWorkspaceDTO) throws URISyntaxException{
 		int workspaceId;
 		int adminTeamId;
 		int guestTeamId;
@@ -53,6 +55,7 @@ public class WorkspaceController {
 		TeamDTO guestTeamDTO;
 		TeamPermissionRequest adminTeamPermissionRequest;
 		TeamPermissionRequest guestTeamPermissionRequest;
+		Workspace workspace;
 		
 		workspaceId = workspaceService.insertWorkspace(workspaceDTO);
 		
@@ -80,7 +83,9 @@ public class WorkspaceController {
 		
 		userWorkspaceService.insertUserWorkspace(userWorkspaceDTO, workspaceId, guestTeamId);
 		
-		return RESPONSE_OK;
+		workspace = workspaceService.findWorkspaceById(workspaceId);
+		
+		return ResponseEntity.created(new URI("/workspace/" + workspaceId)).header("Content-Location", "/api/workspace/" + workspaceId).body(workspace);
 	}
 	
 	@GetMapping("/{workspaceId}")
