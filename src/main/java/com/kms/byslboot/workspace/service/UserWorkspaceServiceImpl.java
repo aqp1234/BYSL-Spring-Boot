@@ -35,7 +35,7 @@ public class UserWorkspaceServiceImpl implements UserWorkspaceService{
 
 	@Override
 	public List<UserWorkspace> findUserWorkspaceByWorkspaceId(int workspaceId) {
-		return userWorkspaceMapper.findUSerWorkspaceByWorkspaceId(workspaceId);
+		return userWorkspaceMapper.findUserWorkspaceByWorkspaceId(workspaceId);
 	}
 
 	@Override
