@@ -13,15 +13,23 @@
 		SELECT * FROM USER_WORKSPACE WHERE id = #{userWorkspaceId}
 	</select>
 	
+	<select id="findConnectedUserWorkspace" parameterType="UserWorkspace" resultType="UserWorkspace">
+		SELECT * FROM USER_WORKSPACE WHERE workspace_id = #{workspaceId} and user_id = #{userId}
+	</select>
+	
 	<select id="findUserWorkspaceByWorkspaceId" parameterType="int" resultType="UserWorkspace">
 		SELECT * FROM USER_WORKSPACE WHERE workspace_id = #{workspaceId}
+	</select>
+	
+	<select id="findUserWorkspaceByUserId" parameterType="int" resultType="UserWorkspace">
+		SELECT * FROM USER_WORKSPACE WHERE user_id = #{userId}
 	</select>
 	
 	<update id="updateUserWorkspace" parameterType="UserWorkspace">
 		UPDATE USER_WORKSPACE SET nick = #{nick}, color = #{color} WHERE id = #{id}
 	</update>
 	
-	<delete id="deleteUserWorkspaceId" parameterType="int">
+	<delete id="deleteUserWorkspaceById" parameterType="int">
 		DELETE FROM USER_WORKSPACE WHERE id = #{id}
 	</delete>
 </mapper>

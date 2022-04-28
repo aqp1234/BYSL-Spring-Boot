@@ -29,13 +29,23 @@ public class UserWorkspaceServiceImpl implements UserWorkspaceService{
 
 	@Override
 	public UserWorkspace findUserWorkspaceById(int userWorkspaceId) {
-		UserWorkspace userWorkspace = userWorkspaceMapper.findUserWorkspaceById(userWorkspaceId).orElseThrow(UserWorkspaceNotFoundException::new);
-		return userWorkspace;
+		return userWorkspaceMapper.findUserWorkspaceById(userWorkspaceId).orElseThrow(UserWorkspaceNotFoundException::new);
+	}
+
+	@Override
+	public UserWorkspace findConnectedUserWorkspace(UserWorkspaceDTO userWorkspaceDTO, int workspaceId) {
+		UserWorkspace userWorkspace = userWorkspaceDTO.toEntity(userWorkspaceDTO, session, workspaceId);
+		return userWorkspaceMapper.findConnectedUserWorkspace(userWorkspace).orElseThrow(UserWorkspaceNotFoundException::new);
 	}
 
 	@Override
 	public List<UserWorkspace> findUserWorkspaceByWorkspaceId(int workspaceId) {
 		return userWorkspaceMapper.findUserWorkspaceByWorkspaceId(workspaceId);
+	}
+
+	@Override
+	public List<UserWorkspace> findUserWorkspaceByUserId(int userId) {
+		return userWorkspaceMapper.findUserWorkspaceByUserId(userId);
 	}
 
 	@Override

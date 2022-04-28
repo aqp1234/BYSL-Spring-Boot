@@ -35,6 +35,15 @@ public class UserWorkspaceDTO {
 					.build();
 	}
 	
+	public UserWorkspace toEntity(UserWorkspaceDTO userWorkspaceDTO, HttpSession session, int workspaceId) {
+		return UserWorkspace.builder()
+					.userId((int) session.getAttribute(MEMBER_ID))
+					.workspaceId(workspaceId)
+					.nick(userWorkspaceDTO.getNick())
+					.color(userWorkspaceDTO.getColor())
+					.build();
+	}
+	
 	public UserWorkspace toUpdateEntity(UserWorkspaceDTO userWorkspaceDTO, int userWorkspaceId) {
 		return UserWorkspace.builder()
 					.id(userWorkspaceId)

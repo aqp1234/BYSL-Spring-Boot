@@ -12,6 +12,7 @@ import com.kms.byslboot.workspace.entity.UserWorkspace;
 public interface UserWorkspaceMapper {
 	public void insertUserWorkspace(UserWorkspace userWorkspace);
 	public Optional<UserWorkspace> findUserWorkspaceById(int userWorkspaceId);
+	public Optional<UserWorkspace> findConnectedUserWorkspace(UserWorkspace userWorkspace);
 	public List<UserWorkspace> findUserWorkspaceByWorkspaceId(int workspaceId);
 	public List<UserWorkspace> findUserWorkspaceByUserId(int userId);
 	public void updateUserWorkspace(UserWorkspace userWorkspace);
