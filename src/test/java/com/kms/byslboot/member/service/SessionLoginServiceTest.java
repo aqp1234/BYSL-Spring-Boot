@@ -1,4 +1,4 @@
-package com.kms.byslboot.member;
+package com.kms.byslboot.member.service;
 
 import static com.kms.byslboot.fixture.MemberFixture.MEMBER1;
 import static com.kms.byslboot.member.service.SessionLoginServiceImpl.MEMBER_ID;
