@@ -16,5 +16,8 @@
 		<typeAlias type="com.kms.byslboot.workspace.dto.TeamPermissionResponse" alias="TeamPermissionResponse" />
 		<typeAlias type="com.kms.byslboot.workspace.entity.UserWorkspace" alias="UserWorkspace" />
 		<typeAlias type="com.kms.byslboot.workspace.entity.Workspace" alias="Workspace" />
+		<typeAlias type="com.kms.byslboot.calendar.entity.Calendar" alias="Calendar" />
+		<typeAlias type="com.kms.byslboot.calendar.dto.CalendarRequest" alias="CalendarRequest" />
+		<typeAlias type="com.kms.byslboot.calendar.dto.CalendarResponse" alias="CalendarResponse" />
 	</typeAliases>
 </configuration>

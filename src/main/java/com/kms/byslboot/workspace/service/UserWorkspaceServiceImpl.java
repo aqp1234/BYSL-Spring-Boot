@@ -1,5 +1,7 @@
 package com.kms.byslboot.workspace.service;
 
+import static com.kms.byslboot.member.service.SessionLoginServiceImpl.MEMBER_ID;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +35,8 @@ public class UserWorkspaceServiceImpl implements UserWorkspaceService{
 	}
 
 	@Override
-	public UserWorkspace findConnectedUserWorkspace(UserWorkspaceDTO userWorkspaceDTO, int workspaceId) {
-		UserWorkspace userWorkspace = userWorkspaceDTO.toEntity(userWorkspaceDTO, session, workspaceId);
+	public UserWorkspace findConnectedUserWorkspace(int workspaceId) {
+		UserWorkspace userWorkspace = UserWorkspace.builder().userId((int) session.getAttribute(MEMBER_ID)).workspaceId(workspaceId).build();
 		return userWorkspaceMapper.findConnectedUserWorkspace(userWorkspace).orElseThrow(UserWorkspaceNotFoundException::new);
 	}
 
