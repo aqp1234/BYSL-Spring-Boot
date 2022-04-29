@@ -11,7 +11,7 @@ import com.kms.byslboot.member.entity.Member;
 @Mapper
 public interface MemberMapper {
 	List<Member> findAll();
-	int insertMember(Member member);
+	void insertMember(Member member);
 	Optional<Member> findMemberById(int memberId);
 	Optional<Member> findMemberByEmail(String email);
 	boolean existsByEmail(String email);

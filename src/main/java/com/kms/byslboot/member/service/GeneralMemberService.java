@@ -64,9 +64,9 @@ public class GeneralMemberService implements MemberService{
 			e.printStackTrace();
 		}
 		
-		int memberId = memberMapper.insertMember(member);
+		memberMapper.insertMember(member);
 		
-		return memberId;
+		return member.getId();
 	}
 
 	@Override
