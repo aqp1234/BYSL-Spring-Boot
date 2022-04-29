@@ -2,6 +2,7 @@ package com.kms.byslboot.member.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -84,7 +85,7 @@ public class GeneralMemberServiceTest {
 	@DisplayName("맴버 추가 테스트")
 	@Disabled
 	void insertMemberTest() {
-		when(memberMapper.insertMember(any(Member.class))).thenReturn(1);
+		doNothing().when(memberMapper).insertMember(any(Member.class));
 		
 		assertThat(memberService.insertMember(memberDTO)).isEqualTo(1);
 	}
