@@ -12,6 +12,6 @@ public interface CalendarService {
 	public CalendarResponse findCalendarById(int calendarId);
 	public List<CalendarResponse> findCalendarByDate(CalendarRequest calendarRequest, int workspaceId);
 	public List<CalendarResponse> findCalendarByMonth(CalendarRequest calendarRequest, int workspaceId);
-	public void updateCalendar(CalendarRequest calendarRequest, int workspaceId);
+	public void updateCalendar(CalendarRequest calendarRequest, int calendarId, int workspaceId);
 	public void deleteCalendarById(int calendarId);
 }

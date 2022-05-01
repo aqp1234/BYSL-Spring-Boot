@@ -63,8 +63,9 @@ public class CalendarController {
 	}
 	
 	@PostMapping("/{calendarId}")
-	public ResponseEntity<HttpStatus> updateCalendar(@RequestBody @Valid CalendarRequest calendarRequest, @PathVariable int workspaceId){
-		calendarService.updateCalendar(calendarRequest, workspaceId);
+	public ResponseEntity<HttpStatus> updateCalendar(@RequestBody @Valid CalendarRequest calendarRequest, @PathVariable int workspaceId
+			, @PathVariable int calendarId){
+		calendarService.updateCalendar(calendarRequest, calendarId, workspaceId);
 		return RESPONSE_OK;
 	}
 	

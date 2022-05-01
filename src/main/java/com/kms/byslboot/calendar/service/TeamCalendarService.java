@@ -55,8 +55,8 @@ public class TeamCalendarService implements CalendarService{
 	}
 
 	@Override
-	public void updateCalendar(CalendarRequest calendarRequest, int workspaceId) {
-		Calendar calendar = calendarRequest.toEntity(calendarRequest, workspaceId, userWorkspaceService);
+	public void updateCalendar(CalendarRequest calendarRequest, int calendarId, int workspaceId) {
+		Calendar calendar = calendarRequest.toEntity(calendarRequest, calendarId, workspaceId, userWorkspaceService);
 		calendarMapper.updateCalendar(calendar);
 	}
 
