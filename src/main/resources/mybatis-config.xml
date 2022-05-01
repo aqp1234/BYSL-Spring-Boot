@@ -19,5 +19,8 @@
 		<typeAlias type="com.kms.byslboot.calendar.entity.Calendar" alias="Calendar" />
 		<typeAlias type="com.kms.byslboot.calendar.dto.CalendarRequest" alias="CalendarRequest" />
 		<typeAlias type="com.kms.byslboot.calendar.dto.CalendarResponse" alias="CalendarResponse" />
+		<typeAlias type="com.kms.byslboot.conference.entity.Conference" alias="Conference" />
+		<typeAlias type="com.kms.byslboot.conference.dto.ConferenceRequest" alias="ConferenceRequest" />
+		<typeAlias type="com.kms.byslboot.conference.dto.ConferenceResponse" alias="ConferenceResponse" />
 	</typeAliases>
 </configuration>

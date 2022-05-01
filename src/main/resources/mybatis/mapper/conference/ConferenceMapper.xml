@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kms.byslboot.conference.mapper.ConferenceMapper">
+
+	<insert id="insertConference" parameterType="Conference" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO CONFERENCE(workspace_id, owner_user_workspace_id, subject, content) 
+		VALUES (#{workspaceId}, #{ownerUserWorkspaceId}, #{subject}, #{content})
+	</insert>
+	
+	<select id="findConferenceById" parameterType="int" resultType="ConferenceResponse">
+		SELECT A.id, A.workspace_id, B.workspace_name, C.user_id as ownerId, C.nick, C.color, A.subject, A.content 
+		FROM CONFERENCE A JOIN WORKSPACE B ON A.workspace_id = B.id 
+		LEFT OUTER JOIN USER_WORKSPACE C ON A.owner_user_workspace_id = C.id 
+		WHERE A.id = #{conferenceId}
+	</select>
+	
+	<select id="findConferenceByWorkspaceId" parameterType="int" resultType="ConferenceResponse">
+		SELECT A.id, A.workspace_id, B.workspace_name, C.user_id as ownerId, C.nick, C.color, A.subject, A.content 
+		FROM CONFERENCE A JOIN WORKSPACE B ON A.workspace_id = B.id 
+		LEFT OUTER JOIN USER_WORKSPACE C ON A.owner_user_workspace_id = C.id 
+		WHERE A.workspace_id = #{workspaceId}
+	</select>
+	
+	<update id="updateConference" parameterType="Conference">
+		UPDATE CONFERENCE SET subject = #{subject}, content = #{content} WHERE id = #{conferenceId}
+	</update>
+	
+	<delete id="deleteConferenceById" parameterType="int">
+		DELETE FROM CONFERENCE WHERE id = #{conferenceId}
+	</delete>
+</mapper>
