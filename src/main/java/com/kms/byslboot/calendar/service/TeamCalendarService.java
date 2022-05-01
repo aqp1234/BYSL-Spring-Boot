@@ -23,9 +23,10 @@ public class TeamCalendarService implements CalendarService{
 	private final UserWorkspaceService userWorkspaceService;
 
 	@Override
-	public void insertCalendar(CalendarRequest calendarRequest, int workspaceId) {
+	public int insertCalendar(CalendarRequest calendarRequest, int workspaceId) {
 		Calendar calendar = calendarRequest.toEntity(calendarRequest, workspaceId, userWorkspaceService);
 		calendarMapper.insertCalendar(calendar);
+		return calendar.getId();
 	}
 
 	@Override

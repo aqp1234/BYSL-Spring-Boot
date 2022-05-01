@@ -4,26 +4,26 @@
 
 <mapper namespace="com.kms.byslboot.calendar.mapper.CalendarMapper">
 
-	<insert id="insertCalendar" parameterType="Calendar" useGeneratedKeys="true" keyColumn="id">
+	<insert id="insertCalendar" parameterType="Calendar" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO CALENDAR(workspace_id, owner_user_workspace_id, subject, content, start_date, end_date)
 		VALUES (#{workspaceId}, #{ownerUserWorkspaceId}, #{subject}, #{content}, #{startDate}, #{endDate})
 	</insert>
 	
 	<select id="findCalendarById" parameterType="int" resultType="CalendarResponse">
-		SELECT A.id, A.workspace_id, C.workspace_name, B.user_id as ownerId, B.nick, B.color, A.subject, A.content, A.start_date, A.endDate 
-		FROM CALENDAR A LEFT OUTER JOIN USER_WORKSPACE ON A.owner_user_workspace_id = B.id JOIN WORKSPACE C ON A.workspace_id = C.id 
+		SELECT A.id, A.workspace_id, C.workspace_name, B.user_id as ownerId, B.nick, B.color, A.subject, A.content, A.start_date, A.end_date 
+		FROM CALENDAR A LEFT OUTER JOIN USER_WORKSPACE B ON A.owner_user_workspace_id = B.id JOIN WORKSPACE C ON A.workspace_id = C.id 
 		WHERE A.id = #{calendarId}
 	</select>
 	
 	<select id="findCalendarByDate" parameterType="Calendar" resultType="CalendarResponse">
-		SELECT A.id, A.workspace_id, C.workspace_name, B.user_id as ownerId, B.nick, B.color, A.subject, A.content, A.start_date, A.endDate 
-		FROM CALENDAR A LEFT OUTER JOIN USER_WORKSPACE ON A.owner_user_workspace_id = B.id JOIN WORKSPACE C ON A.workspace_id = C.id 
+		SELECT A.id, A.workspace_id, C.workspace_name, B.user_id as ownerId, B.nick, B.color, A.subject, A.content, A.start_date, A.end_date 
+		FROM CALENDAR A LEFT OUTER JOIN USER_WORKSPACE B ON A.owner_user_workspace_id = B.id JOIN WORKSPACE C ON A.workspace_id = C.id 
 		WHERE A.workspace_id = #{workspaceId} AND A.start_date <![CDATA[<]]> #{endDate} AND A.end_date <![CDATA[>=]]> #{startDate}
 	</select>
 	
 	<select id="findCalendarByMonth" parameterType="Calendar" resultType="CalendarResponse">
-		SELECT A.id, A.workspace_id, C.workspace_name, B.user_id as ownerId, B.nick, B.color, A.subject, A.content, A.start_date, A.endDate 
-		FROM CALENDAR A LEFT OUTER JOIN USER_WORKSPACE ON A.owner_user_workspace_id = B.id JOIN WORKSPACE C ON A.workspace_id = C.id 
+		SELECT A.id, A.workspace_id, C.workspace_name, B.user_id as ownerId, B.nick, B.color, A.subject, A.content, A.start_date, A.end_date 
+		FROM CALENDAR A LEFT OUTER JOIN USER_WORKSPACE B ON A.owner_user_workspace_id = B.id JOIN WORKSPACE C ON A.workspace_id = C.id 
 		WHERE A.workspace_id = #{workspaceId} AND A.start_date <![CDATA[<]]> #{endDate} AND A.end_date <![CDATA[>=]]> #{startDate}
 	</select>
 	

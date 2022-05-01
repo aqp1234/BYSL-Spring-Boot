@@ -23,8 +23,6 @@ import lombok.NoArgsConstructor;
 @DateValid
 public class CalendarRequest {
 	
-	private int id;
-	
 	@NotEmpty(message = "제목은 빈 값일 수 없습니다.")
 	@Size(max = 50, message = "제목은 50 글자를 넘을 수 없습니다.")
 	private String subject;
@@ -38,6 +36,19 @@ public class CalendarRequest {
 	public Calendar toEntity(CalendarRequest calendarRequest, int workspaceId, UserWorkspaceService userWorkspaceService) {
 		UserWorkspace userWorkspace = userWorkspaceService.findConnectedUserWorkspace(workspaceId);
 		return Calendar.builder()
+					.workspaceId(workspaceId)
+					.ownerUserWorkspaceId(userWorkspace.getId())
+					.subject(calendarRequest.getSubject())
+					.content(calendarRequest.getContent())
+					.startDate(Date.valueOf(calendarRequest.getStartDate()))
+					.endDate(Date.valueOf(calendarRequest.getEndDate()))
+					.build();
+	}
+	
+	public Calendar toEntity(CalendarRequest calendarRequest, int calendarId, int workspaceId, UserWorkspaceService userWorkspaceService) {
+		UserWorkspace userWorkspace = userWorkspaceService.findConnectedUserWorkspace(workspaceId);
+		return Calendar.builder()
+					.id(calendarId)
 					.workspaceId(workspaceId)
 					.ownerUserWorkspaceId(userWorkspace.getId())
 					.subject(calendarRequest.getSubject())

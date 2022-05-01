@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kms.byslboot.calendar.dto.CalendarRequest;
 import com.kms.byslboot.calendar.dto.CalendarResponse;
 import com.kms.byslboot.calendar.service.CalendarService;
+import com.kms.byslboot.common.annotation.LoginRequired;
 
 import lombok.RequiredArgsConstructor;
 
+@LoginRequired
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/calendar/{workspaceId}")
@@ -47,8 +49,8 @@ public class CalendarController {
 	
 	@PostMapping
 	public ResponseEntity<CalendarResponse> insertCalendar(@RequestBody @Valid CalendarRequest calendarRequest, @PathVariable int workspaceId) throws URISyntaxException{
-		calendarService.insertCalendar(calendarRequest, workspaceId);
-		CalendarResponse calendarResponse = calendarService.findCalendarById(calendarRequest.getId());
+		int calendarId = calendarService.insertCalendar(calendarRequest, workspaceId);
+		CalendarResponse calendarResponse = calendarService.findCalendarById(calendarId);
 		return ResponseEntity.created(new URI("/calendar/" + workspaceId + "/" + calendarResponse.getId()))
 							.header("Content-Location", "/api/calenldar/" + workspaceId + "/" + calendarResponse.getId())
 							.body(calendarResponse);

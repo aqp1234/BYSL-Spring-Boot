@@ -8,7 +8,7 @@ import com.kms.byslboot.calendar.dto.CalendarResponse;
 
 public interface CalendarService {
 
-	public void insertCalendar(CalendarRequest calendarRequest, int workspaceId);
+	public int insertCalendar(CalendarRequest calendarRequest, int workspaceId);
 	public CalendarResponse findCalendarById(int calendarId);
 	public List<CalendarResponse> findCalendarByDate(CalendarRequest calendarRequest, int workspaceId);
 	public List<CalendarResponse> findCalendarByMonth(CalendarRequest calendarRequest, int workspaceId);
