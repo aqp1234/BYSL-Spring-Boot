@@ -24,7 +24,7 @@
 	</select>
 	
 	<update id="updateConference" parameterType="Conference">
-		UPDATE CONFERENCE SET subject = #{subject}, content = #{content} WHERE id = #{conferenceId}
+		UPDATE CONFERENCE SET subject = #{subject}, content = #{content} WHERE id = #{id}
 	</update>
 	
 	<delete id="deleteConferenceById" parameterType="int">

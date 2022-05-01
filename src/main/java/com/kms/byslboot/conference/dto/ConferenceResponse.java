@@ -7,7 +7,7 @@ public class ConferenceResponse {
 	
 	private int id;
 	private int workspaceId;
-	private int workspaceName;
+	private String workspaceName;
 	private int ownerId;
 	private String nick;
 	private String color;
