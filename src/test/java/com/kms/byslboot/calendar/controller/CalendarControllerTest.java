@@ -1,5 +1,6 @@
 package com.kms.byslboot.calendar.controller;
 
+import static com.kms.byslboot.member.service.SessionLoginServiceImpl.MEMBER_ID;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -38,6 +40,8 @@ public class CalendarControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
+	private MockHttpSession session;
+	
 	private CalendarRequest calendarRequestDTO;
 	
 	@BeforeEach
@@ -52,16 +56,20 @@ public class CalendarControllerTest {
 									.startDate("2022-04-29")
 									.endDate("2022-04-30")
 									.build();
+		session = new MockHttpSession();
+
+		session.setAttribute(MEMBER_ID, 11);
 	}
 	
 	@Test
 	@DisplayName("Request에 대한 Valid 확인")
 	public void calendarRequestValidTest() throws Exception {
 		String content = objectMapper.writeValueAsString(calendarRequestDTO);
-		mvc.perform(post("/api/calendar")
+		mvc.perform(post("/api/calendar/3")
+				.session(session)
 				.content(content)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
+				.andExpect(status().isCreated());
 	}
 }
