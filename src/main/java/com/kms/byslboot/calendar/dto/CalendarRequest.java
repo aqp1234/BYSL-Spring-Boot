@@ -2,7 +2,6 @@ package com.kms.byslboot.calendar.dto;
 
 import java.sql.Date;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -20,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@DateValid
+@DateValid(startDate = "startDate", endDate = "endDate")
 public class CalendarRequest {
 	
 	@NotEmpty(message = "제목은 빈 값일 수 없습니다.")
