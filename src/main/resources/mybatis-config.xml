@@ -22,5 +22,8 @@
 		<typeAlias type="com.kms.byslboot.conference.entity.Conference" alias="Conference" />
 		<typeAlias type="com.kms.byslboot.conference.dto.ConferenceRequest" alias="ConferenceRequest" />
 		<typeAlias type="com.kms.byslboot.conference.dto.ConferenceResponse" alias="ConferenceResponse" />
+		<typeAlias type="com.kms.byslboot.dashboard.entity.Dashboard" alias="Dashboard" />
+		<typeAlias type="com.kms.byslboot.dashboard.dto.DashboardRequest" alias="DashboardRequest" />
+		<typeAlias type="com.kms.byslboot.dashboard.dto.DashboardResponse" alias="DashboardResponse" />
 	</typeAliases>
 </configuration>

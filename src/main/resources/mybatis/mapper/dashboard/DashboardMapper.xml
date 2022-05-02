@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kms.byslboot.dashboard.mapper.DashboardMapper">
+
+	<insert id="insertDashboard" parameterType="Dashboard" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO DASHBOARD(workspace_id, owner_user_workspace_id, manager_user_workspace_id, subject, content, start_date, end_date, flag) 
+		VALUES (#{workspaceId}, #{ownerUserWorkspaceId}, #{managerUserWorkspaceId}, #{subject}, #{content}, #{startDate}, #{endDate}, #{flag})
+	</insert>
+	
+	<select id="findDashboardById" parameterType="int" resultType="DashboardResponse">
+		SELECT A.id, A.workspace_id, B.workspace_name, A.owner_user_workspace_id, C.nick, C.color
+		, A.manager_user_workspace_id, C.nick as manager_nick, C.color as manager_color, A.subject, A.content, A.start_date, A.end_date, A.flag 
+		FROM DASHBOARD A JOIN WORKSPACE B ON A.workspace_id = B.id 
+		LEFT OUTER JOIN USER_WORKSPACE C ON A.owner_user_workspace_id = C.id 
+		LEFT OUTER JOIN USER_WORKSPACE ON A.manager_user_workspace_id = C.id 
+		WHERE A.id = #{dashboardId}
+	</select>
+	
+	<select id="findDashboardByWorkspaceId" parameterType="int" resultType="DashboardResponse">
+		SELECT A.id, A.workspace_id, B.workspace_name, A.owner_user_workspace_id, C.nick, C.color
+		, A.manager_user_workspace_id, C.nick as manager_nick, C.color as manager_color, A.subject, A.content, A.start_date, A.end_date, A.flag 
+		FROM DASHBOARD A JOIN WORKSPACE B ON A.workspace_id = B.id 
+		LEFT OUTER JOIN USER_WORKSPACE C ON A.owner_user_workspace_id = C.id 
+		LEFT OUTER JOIN USER_WORKSPACE ON A.manager_user_workspace_id = C.id 
+		WHERE A.workspace_id = #{workspaceId}
+	</select>
+	
+	<update id="updateDashboard" parameterType="Dashboard">
+		UPDATE DASHBOARD SET manager_user_workspace_id = #{managerUserWorkspaceId}, subject = #{subject}, content = #{content}
+		, start_date = #{startDate}, end_date = #{endDate}, flag = #{flag} 
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteDashboardById" parameterType="int">
+		DELETE FROM DASHBOARD WHERE id = #{dashboardId}
+	</delete>
+</mapper>

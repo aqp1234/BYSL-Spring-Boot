@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.kms.byslboot.calendar.exception.CalendarNotFoundException;
 import com.kms.byslboot.conference.exception.ConferenceNotFoundException;
+import com.kms.byslboot.dashboard.exception.DashboardNotFoundException;
 import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.exception.UnAuthenticatedException;
@@ -31,7 +32,7 @@ public class ExceptionAdvice {
 
 	@ExceptionHandler({MemberNotFoundException.class, WorkspaceNotFoundException.class, 
 		UserWorkspaceNotFoundException.class, TeamNotFoundException.class, CalendarNotFoundException.class
-		, ConferenceNotFoundException.class})
+		, ConferenceNotFoundException.class, DashboardNotFoundException.class})
 	public ResponseEntity<HttpStatus> notFoundException(){
 		return RESPONSE_NOT_FOUND;
 	}
