@@ -56,7 +56,6 @@ class DashboardMapperTest {
 							.build();
 		
 		dashboardRequest = DashboardRequest.builder()
-								.ownerUserWorkspaceId(2)
 								.managerUserWorkspaceId(2)
 								.subject("subjectTest")
 								.content("contentTest")
@@ -66,7 +65,6 @@ class DashboardMapperTest {
 								.build();
 		
 		dashboardRequestUpdate = DashboardRequest.builder()
-									.ownerUserWorkspaceId(2)
 									.managerUserWorkspaceId(2)
 									.subject("subjectTest")
 									.content("contentTest")
@@ -92,7 +90,6 @@ class DashboardMapperTest {
 	void findDashboardById() {
 		dashboardMapper.insertDashboard(dashboard);
 		DashboardResponse dashboardResponse = dashboardMapper.findDashboardById(dashboard.getId()).orElseThrow(DashboardNotFoundException::new);
-		assertThat(dashboardResponse.getOwnerUserWorkspaceId()).isEqualTo(dashboardRequest.getOwnerUserWorkspaceId());
 		assertThat(dashboardResponse.getManagerUserWorkspaceId()).isEqualTo(dashboardRequest.getManagerUserWorkspaceId());
 		assertThat(dashboardResponse.getManagerNick()).isEqualTo(userWorkspace.getNick());
 		assertThat(dashboardResponse.getManagerColor()).isEqualTo(userWorkspace.getColor());
@@ -119,7 +116,6 @@ class DashboardMapperTest {
 		dashboardMapper.updateDashboard(dashboardUpdate);
 		DashboardResponse dashboardResponse = dashboardMapper.findDashboardById(dashboardUpdate.getId()).orElseThrow(DashboardNotFoundException::new);
 
-		assertThat(dashboardResponse.getOwnerUserWorkspaceId()).isEqualTo(dashboardRequestUpdate.getOwnerUserWorkspaceId());
 		assertThat(dashboardResponse.getManagerUserWorkspaceId()).isEqualTo(dashboardRequestUpdate.getManagerUserWorkspaceId());
 		assertThat(dashboardResponse.getSubject()).isEqualTo(dashboardRequestUpdate.getSubject());
 		assertThat(dashboardResponse.getContent()).isEqualTo(dashboardRequestUpdate.getContent());
