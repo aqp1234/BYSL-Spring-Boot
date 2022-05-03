@@ -23,9 +23,6 @@ import lombok.NoArgsConstructor;
 @DateValid(startDate = "startDate", endDate = "endDate")
 public class DashboardRequest {
 	
-	@NotEmpty(message = "작성자 값은 필수 값입니다.")
-	private int ownerUserWorkspaceId;
-	
 	@NotEmpty(message = "처리자 값은 필수 값입니다.")
 	private int managerUserWorkspaceId;
 	
