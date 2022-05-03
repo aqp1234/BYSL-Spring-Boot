@@ -6,6 +6,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,7 +41,7 @@ public class DashboardController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<DashboardResponse> insertDashboard(@RequestBody DashboardRequest dashboardRequest, @PathVariable int workspaceId) throws URISyntaxException{
+	public ResponseEntity<DashboardResponse> insertDashboard(@RequestBody @Valid DashboardRequest dashboardRequest, @PathVariable int workspaceId) throws URISyntaxException{
 		int dashboardId = dashboardService.insertDashboard(dashboardRequest, workspaceId);
 		DashboardResponse dashboardResponse = dashboardService.findDashboardById(dashboardId);
 		return ResponseEntity.created(new URI("/dashboard/" + workspaceId + "/" + dashboardId))
