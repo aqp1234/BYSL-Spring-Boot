@@ -25,5 +25,8 @@
 		<typeAlias type="com.kms.byslboot.dashboard.entity.Dashboard" alias="Dashboard" />
 		<typeAlias type="com.kms.byslboot.dashboard.dto.DashboardRequest" alias="DashboardRequest" />
 		<typeAlias type="com.kms.byslboot.dashboard.dto.DashboardResponse" alias="DashboardResponse" />
+		<typeAlias type="com.kms.byslboot.share.entity.Share" alias="Share" />
+		<typeAlias type="com.kms.byslboot.share.dto.ShareRequest" alias="ShareRequest" />
+		<typeAlias type="com.kms.byslboot.share.dto.ShareResponse" alias="ShareResponse" />
 	</typeAliases>
 </configuration>

@@ -22,6 +22,7 @@ import com.kms.byslboot.dashboard.exception.DashboardNotFoundException;
 import com.kms.byslboot.member.exception.DuplicatedKeyException;
 import com.kms.byslboot.member.exception.MemberNotFoundException;
 import com.kms.byslboot.member.exception.UnAuthenticatedException;
+import com.kms.byslboot.share.exception.ShareNotFoundException;
 import com.kms.byslboot.workspace.exception.PermissionNotFoundException;
 import com.kms.byslboot.workspace.exception.TeamNotFoundException;
 import com.kms.byslboot.workspace.exception.UserWorkspaceNotFoundException;
@@ -32,7 +33,7 @@ public class ExceptionAdvice {
 
 	@ExceptionHandler({MemberNotFoundException.class, WorkspaceNotFoundException.class, 
 		UserWorkspaceNotFoundException.class, TeamNotFoundException.class, CalendarNotFoundException.class
-		, ConferenceNotFoundException.class, DashboardNotFoundException.class})
+		, ConferenceNotFoundException.class, DashboardNotFoundException.class, ShareNotFoundException.class})
 	public ResponseEntity<HttpStatus> notFoundException(){
 		return RESPONSE_NOT_FOUND;
 	}
